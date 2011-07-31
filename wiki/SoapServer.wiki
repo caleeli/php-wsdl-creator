@@ -2,9 +2,11 @@
 
 = Introduction =
 
-The PHP SoapServer object.
+A PHP SoapServer object.
 
 
 = Details =
 
-See the [http://www.php.net/manual/en/book.soap.php PHP online documentation].
+See the [http://www.php.net/manual/en/book.soap.php PHP online documentation]: PhpWsdl uses the PHP SoapServer per default.
+
+But you may use any other SOAP server with PhpWsdl, too - NuSOAP or Zend for example.
