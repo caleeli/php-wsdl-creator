@@ -6,4 +6,4 @@ A WSDL complex type.
 
 = Details =
 
-Currently PhpWsdl supports complex types with sequenced elements of mixed types. PhpWsdl also supports simply arrays.
+Currently PhpWsdl supports complex types with sequenced elements of mixed types. PhpWsdl also supports simple arrays.
