@@ -6,8 +6,6 @@ A simple, thin and fast WSDL generator for PHP.
 
 = Details =
 
-PhpWsdl is the name of the WSDL generator for PHP.
-
 Create a SOAP server from an existing PHP class with only a single line of code:
 
 {{{
