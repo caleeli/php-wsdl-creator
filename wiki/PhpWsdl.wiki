@@ -7,3 +7,9 @@ This is the name of the project.
 = Details =
 
 PhpWsdl is the name of the WSDL generator for PHP.
+
+Create a SOAP server from an existing PHP class with only a single line of code:
+
+{{{
+new PhpWsdl(true);
+}}}
