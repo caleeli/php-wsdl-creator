@@ -1,0 +1,9 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+A WSDL complex type.
+
+= Details =
+
+Currently PhpWsdl supports complex types with sequenced elements of mixed types. PhpWsdl also supports simply arrays.
