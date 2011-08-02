@@ -1,4 +1,4 @@
-#summary Short description about the complex type support from PhpWsdl
+#summary Short description about the complex type support of PhpWsdl
 
 = Introduction =
 
