@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary Short description about the complex type support from PhpWsdl
 
 = Introduction =
 
