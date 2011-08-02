@@ -1,5 +1,4 @@
-#summary One-sentence summary of this page.
-
+#summary Short description: What is PhpWsdl?
 = Introduction =
 
 A simple, thin and fast WSDL generator for PHP.
