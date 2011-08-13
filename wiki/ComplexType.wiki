@@ -31,6 +31,11 @@ To create an array simply add "Array" to the type name:
 /**
  * The description
  * 
+ * @pw_complex arrayOfInt[] int An array of int
+ */
+/**
+ * The description
+ * 
  * @pw_complex SampleComplexArray An array of SampleComplex
  */
 }}}
