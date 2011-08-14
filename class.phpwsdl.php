@@ -50,7 +50,7 @@ PhpWsdl::PostInit();
  * 
  * @author Andreas Zimmermann
  * @copyright ©2011 Andreas Zimmermann, wan24.de
- * @version 2.3
+ * @version 2.2.1
  */
 class PhpWsdl{
 	/**
@@ -58,7 +58,7 @@ class PhpWsdl{
 	 * 
 	 * @var string
 	 */
-	public static $VERSION='2.3';
+	public static $VERSION='2.2.1';
 	/**
 	 * Set this to TRUE to enable the autorun in quick mode
 	 * 
@@ -508,24 +508,7 @@ class PhpWsdl{
 		$runServer=false
 		){
 		self::Debug('Create new PhpWsdl instance');
-		$obj=null;
-		self::CallHook(
-			'BeforeCreateInstanceHook',
-			Array(
-				'server'		=>	&$obj,
-				'namespace'		=>	&$nameSpace,
-				'endpoint'		=>	&$endPoint,
-				'cachefolder'	=>	&$cacheFolder,
-				'file'			=>	&$file,
-				'name'			=>	&$name,
-				'methods'		=>	&$methods,
-				'types'			=>	&$types,
-				'outputonrequest'=>	&$outputOnRequest,
-				'runserver'		=>	&$runServer
-			)
-		);
-		if(is_null($obj))
-			$obj=new PhpWsdl($nameSpace,$endPoint,$cacheFolder,$file,$name,$methods,$types,$outputOnRequest,$runServer);
+		$obj=new PhpWsdl($nameSpace,$endPoint,$cacheFolder,$file,$name,$methods,$types,$outputOnRequest,$runServer);
 		self::CallHook(
 			'CreateInstanceHook',
 			Array(
@@ -1175,10 +1158,9 @@ class PhpWsdl{
 	 * 
 	 * @param boolean $withHeaders Send HTML headers? (default: TRUE)
 	 * @param boolean $echo Print HTML (default: TRUE)
-	 * @param boolean $cache Cache the result (default: TRUE);
 	 * @return string The HTML
 	 */
-	public function OutputHtml($withHeaders=true,$echo=true,$cache=true){
+	public function OutputHtml($withHeaders=true,$echo=true){
 		self::Debug('Output HTML');
 		if(sizeof($this->Methods)<1)
 			$this->CreateWsdl();
@@ -1302,17 +1284,6 @@ class PhpWsdl{
 				}
 				$cnt++;
 				$temp['attachment_'.$cnt]=$this->Name.'.soapclient.php:'.((is_null($this->PhpUri))?$this->EndPoint.'?PHPSOAPCLIENT':$this->PhpUri);
-				self::CallHook(
-					'PdfAttachmentHook',
-					Array(
-						'server'		=>	$this,
-						'cnt'			=>	&$cnt,
-						'param'			=>	&$temp,
-						'res'			=>	&$res,
-						'methods'		=>	&$methods,
-						'types'			=>	&$types
-					)
-				);
 			}
 			$options=Array();
 			$keys=array_keys($temp);
@@ -1352,8 +1323,7 @@ class PhpWsdl{
 			return;
 		$res=utf8_encode($res);
 		$this->HTML=$res;
-		if($cache)
-			$this->WriteWsdlToCache(null,null,null,true);
+		$this->WriteWsdlToCache(null,null,null,true);
 		if($echo)
 			echo $res;
 		return $res;
@@ -1511,10 +1481,9 @@ class PhpWsdl{
 	 * @param boolean $withHeaders Send text headers? (default: TRUE)
 	 * @param boolean $echo Print source (default: TRUE)
 	 * @param array $options Options array (default: array)
-	 * @param boolean $cache Cache the result (default: TRUE);
 	 * @return string PHP source
 	 */
-	public function OutputPhp($withHeaders=true,$echo=true,$options=Array(),$cache=true){
+	public function OutputPhp($withHeaders=true,$echo=true,$options=Array()){
 		self::Debug('Output PHP');
 		if(sizeof($this->Methods)<1)
 			$this->CreateWsdl();
@@ -1555,7 +1524,7 @@ class PhpWsdl{
 			$res[]=" * ".implode("\n * ",explode("\n",$this->Docs));
 			$res[]=" *";
 		}
-		$res[]=" * @service ".$options['class'];
+		$res[]=" * @service ".$this->Name;
 		$res[]=" */";
 		$res[]="class ".$options['class']."{";
 		$res[]="\t/**";
@@ -1637,8 +1606,7 @@ class PhpWsdl{
 		);
 		$res=utf8_encode(implode("\n",$res));
 		$this->PHP=$res;
-		if($cache)
-			$this->WriteWsdlToCache(null,null,null,true);
+		$this->WriteWsdlToCache(null,null,null,true);
 		if($echo)
 			echo $res;
 		return $res;
@@ -1674,27 +1642,15 @@ class PhpWsdl{
 		self::Debug('Run the server');
 		if($forceNoWsdl)
 			self::Debug('Forced non-WSDL mode');
-		if(self::CallHook(
-				'BeforeRunServerHook',
-				Array(
-					'server'		=>	$this,
-					'wsdlfile'		=>	&$wsdlFile,
-					'class'			=>	&$class,
-					'andexit'		=>	&$andExit,
-					'forcenowsdl'	=>	&$forceNoWsdl
-				)
-			)
-		){
-			// WSDL requested?
-			if($this->OutputWsdlOnRequest($andExit))
-				return false;
-			// PHP requested?
-			if($this->OutputPhpOnRequest($andExit))
-				return false;
-			// HTML requested?
-			if($this->OutputHtmlOnRequest($andExit))
-				return false;
-		}
+		// WSDL requested?
+		if($this->OutputWsdlOnRequest($andExit))
+			return false;
+		// PHP requested?
+		if($this->OutputPhpOnRequest($andExit))
+			return false;
+		// HTML requested?
+		if($this->OutputHtmlOnRequest($andExit))
+			return false;
 		// Login
 		$user=null;
 		$password=null;
