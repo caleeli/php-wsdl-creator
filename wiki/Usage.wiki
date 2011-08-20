@@ -35,8 +35,8 @@ my existing customers don't need to rewrite their client applications.
 The same is for the webservices I've created using the Zend SOAP server.
 
 Of course I recommend changing to the new endpoint for existing customers and 
-consuming only the new endpoint to new customers, because at the right time I 
-want to get rid of Zend and NuSOAP.
+consuming only the new endpoint, because at the right time I want to get rid 
+of Zend and NuSOAP.
 
 == Basic usage ==
 
@@ -44,7 +44,7 @@ If you develop your PHP application with Eclipse f.e. it's very easy to
 produce comment blocks since Eclipse will create them for you if you just type 
 "/**" and hit enter. PhpWsdl defined a rule: One WSDL type or method 
 definition per comment block. AND: All methods must be within one webservice 
-handler class!
+handler class! OR: You mix class methods and global methods.
 
 There is an option to use global methods (not using a handler class). You may 
 also mix class and global methods (what is not possible in PHP SoapServer per 
@@ -309,19 +309,19 @@ $soap=PhpWsdl::CreateInstance();
 === Create WSDL ===
 
 {{{
-$soap->CreateWsdl();
+$wsdl=$soap->CreateWsdl();
 }}}
 
 === Create HTML ===
 
 {{{
-$soap->OutputHtml(false,false);
+$html=$soap->OutputHtml(false,false);
 }}}
 
 === Create PHP ===
 
 {{{
-$soap->OutputPhp(false,false);
+$php=$soap->OutputPhp(false,false);
 }}}
 
 === Run the SOAP server ===
@@ -343,7 +343,7 @@ To enable the quick mode:
 
 {{{
 require_once('class.phpwsdl.php');
-PhpWsdl::RunQuickMode;
+PhpWsdl::RunQuickMode();
 }}}
 
 This requires the WSDL definitions and the webservice handler class to be in 
@@ -387,6 +387,21 @@ in an instance. The same for methods. The source of PhpWsdl is fully
 documented, so you may get the usage documentation from IntelliSense of your 
 PHP development IDE or from the source code.
 
-Some advanced usage examples are also included in the demo*.php files that are 
-provided within the PhpWsdl downloads. The downloads also includes 
+Some advanced usage examples are also included in the `demo*.php` files that 
+are provided within the PhpWsdl downloads. The downloads also includes 
 demonstrations for the basic usages.
+
+== Plugins and extensions ==
+
+PhpWsdl supports developing plugins and extensions. This is not documented 
+yet, but if you need to make a plugin or extension, please use the hooking. 
+Contact me if you need an additional hook for your plugin. Of course I'm 
+interested in what you do with plugins and extensions - maybe you want to 
+distribute them here within this project on Google Code, too?
+
+There are already some plugins and extensions available for download in this 
+Google Code project in the Downloads section. If there is a new version of 
+PhpWsdl, I try to make all changes compatible to the existing versions of the 
+plugins and extensions. Sometimes this isn't possible. Then I will also 
+provide a new version of a plugin or extension for the new version of PhpWsdl 
+that matches the current PhpWsdl version number in the download filename.
