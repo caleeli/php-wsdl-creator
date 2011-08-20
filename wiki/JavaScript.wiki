@@ -9,7 +9,7 @@ Example PHP code:
 
 {{{
 require_once('class.phpwsdlajax.php');
-PhpWsdlAjax::RunProxy('http://www.webservicex.net/geoipservice.asmx?WSDL');
+PhpWsdlAjax::RunForwarder('http://www.webservicex.net/geoipservice.asmx');
 }}}
 
 These two lines of code will serve the foreign webservice for your AJAX SOAP clients. The proxy will simply forward any SOAP request to another SOAP webservice.
